@@ -24,6 +24,10 @@ export class CreateAdministratorUseCase {
       throw new Error("Administrator already exists!")
     }
 
+    if (!(password.length  > 7 && password.length < 33)) {
+      throw new Error("Senha inválida (crie uma senha de 8 a 32 caracteres")
+    }
+
     const hashNumber = parseInt(process.env.HASH_NUMBER as string);
 
     const hashPassword = await hash(password, hashNumber)
