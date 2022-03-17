@@ -19,7 +19,7 @@ export class CreateAdministratorUseCase {
       })
   
       if (adminExist) {
-        throw new Error("Administrator already exists!")
+        throw new Error("Administrator already exists!");
       }
   
       if (!(password.length  > 7 && password.length < 33)) {
