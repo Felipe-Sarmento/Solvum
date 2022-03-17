@@ -11,22 +11,20 @@ interface ICreateAdministrator {
 
 
 export class CreateAdministratorUseCase {
-  async execute({ name, username, email, password } : ICreateAdministrator) {
-    const adminExist = await prisma.administrator.findFirst({
-      where: {
-        username: {
-          mode: "insensitive"
+    async execute({ name, username, email, password } : ICreateAdministrator) {
+      const adminExist = await prisma.administrator.findUnique({
+        where: {
+          username
         }
+      })
+  
+      if (adminExist) {
+        throw new Error("Administrator already exists!")
       }
-    })
-
-    if (adminExist) {
-      throw new Error("Administrator already exists!")
-    }
-
-    if (!(password.length  > 7 && password.length < 33)) {
-      throw new Error("Senha inválida (crie uma senha de 8 a 32 caracteres")
-    }
+  
+      if (!(password.length  > 7 && password.length < 33)) {
+        throw new Error("Senha inválida (crie uma senha de 8 a 32 caracteres")
+      }
 
     const hashNumber = parseInt(process.env.HASH_NUMBER as string);
 
