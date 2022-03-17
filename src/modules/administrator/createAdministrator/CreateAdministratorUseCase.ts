@@ -12,11 +12,9 @@ interface ICreateAdministrator {
 
 export class CreateAdministratorUseCase {
   async execute({ name, username, email, password } : ICreateAdministrator) {
-    const adminExist = await prisma.administrator.findFirst({
+    const adminExist = await prisma.administrator.findUnique({
       where: {
-        username: {
-          mode: "insensitive"
-        }
+        username
       }
     })
 
